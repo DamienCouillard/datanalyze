@@ -1,3 +1,7 @@
-# exclude cache and db 
+# exclude db 
 db.sqlite3
+
+#exclude cache
 /src/core/__pycache__/
+/src/extractor/__pycache__/
+/src/extractor/migrations/__pycache__/
