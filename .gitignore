@@ -2,6 +2,6 @@
 db.sqlite3
 
 #exclude cache
-/src/core/__pycache__/
-/src/extractor/__pycache__/
-/src/extractor/migrations/__pycache__/
+/src/config/__pycache__/
+/src/apps/core/__pycache__/
+/src/apps/core/migrations/__pycache__/
