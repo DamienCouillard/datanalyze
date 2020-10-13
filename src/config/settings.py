@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.core',
+    'apps',
     'django_elasticsearch_dsl',
     'django.contrib.admin',
     'django.contrib.auth',
