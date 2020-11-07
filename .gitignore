@@ -1,3 +1,7 @@
-# excludecache and db 
-/src/db.sqlite3
-/src/core/__pycache__/
+# exclude db 
+db.sqlite3
+
+#exclude cache
+/src/config/__pycache__/
+/src/apps/core/__pycache__/
+/src/apps/core/migrations/__pycache__/

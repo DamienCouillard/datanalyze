@@ -1,0 +1,21 @@
+name: Reactjs CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run : |
+        cd web/
+        npm install
+    - name: Run Tests
+      run: |
+        cd web/
+        npm test

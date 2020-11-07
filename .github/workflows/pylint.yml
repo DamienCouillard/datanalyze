@@ -17,8 +17,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
-        pip install Django
         pip install pylint-django
+        pip install -r requirements.txt
+
     - name: Analysing the code with pylint
       run: |
-        DJANGO_SETTINGS_MODULE=aletheia.core.settings  pylint --load-plugins pylint_django src/core/
+        DJANGO_SETTINGS_MODULE=src.config.settings  pylint --load-plugins pylint_django src/config/
