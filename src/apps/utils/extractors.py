@@ -1,19 +1,9 @@
 
 from operator import index
 from typing import List, Type
-from datetime import date
 
 from elasticsearch import Elasticsearch, helpers
-import requests
 
-ELASTIC_TYPE = {
-                    str : "text",
-                    bool : "boolean",
-                    float : "double",
-                    int : "long",
-                    date : "date",
-                    dict : "object",
-                }
 
 class FieldMapping(object):
 
@@ -102,7 +92,7 @@ class DatasetRecords(object):
 
     def __init__(self) -> None:
         self.records = []
-    
+
     def append(self, record:Record) -> bool:
         self.record.append(record.to_doc())
 

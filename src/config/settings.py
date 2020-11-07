@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'apps',
+    'apps.dataset',
+    'corsheaders',
+    'rest_framework', 
     'django_elasticsearch_dsl',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -128,3 +132,19 @@ ELASTICSEARCH_DSL = {
         'hosts': os.getenv("ELASTICSEARCH_DSL_HOSTS", 'localhost:9200')
     },
 }
+
+CORS_ORIGIN_WHITELIST = (
+     'http://localhost:3000',
+ )
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
