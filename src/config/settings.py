@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'apps',
     'apps.dataset',
     'corsheaders',
-    'rest_framework', 
+    'rest_framework',
     'django_elasticsearch_dsl',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,7 +135,7 @@ ELASTICSEARCH_DSL = {
 
 CORS_ORIGIN_WHITELIST = (
      'http://localhost:3000',
- )
+)
 
 CORS_ALLOW_HEADERS = (
     'accept',
