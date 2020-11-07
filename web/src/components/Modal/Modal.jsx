@@ -79,7 +79,9 @@ export default class CustomModal extends Component {
                 value={this.state.activeItem.source_type}
                 onChange={this.handleChange}
                 placeholder="Enter dataset source type"
+                defaultValue='CSV'
               >
+                <option> </option>
                 <option>CSV</option>
                 </Input>
             </FormGroup>

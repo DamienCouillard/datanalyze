@@ -64,9 +64,14 @@ class Datasets extends Component {
         .then(res => this.refreshList());
       return;
     }
+    console.log(item)
     axios
       .post("http://localhost:8000/api/datasets/", item)
-      .then(res => this.refreshList());
+      .then(res => this.refreshList())
+      .catch(err => {
+        // what now?
+        console.log(err);
+      });
   };
 
   createItem = () => {
