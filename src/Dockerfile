@@ -1,6 +1,5 @@
 #install python
-FROM python:3
-ENV PYTHONUNBUFFERED 1
+FROM python:3.7-slim
 RUN mkdir /code
 WORKDIR /code/
 RUN ls

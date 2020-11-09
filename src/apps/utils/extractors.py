@@ -3,15 +3,15 @@ from operator import index
 from typing import List, Type
 
 from elasticsearch import Elasticsearch, helpers
+from apps.utils.utils import ELASTIC_TYPE
 
 
 class FieldMapping(object):
 
-    def __init__(self, id:str, label:str, type:Type) -> None:
+    def __init__(self, label:str, type:Type) -> None:
         """
         Initiate a field for elasticsearch mapping
         """
-        self.id = id
         self.label = label
         self.type = type
 
@@ -32,7 +32,7 @@ class DatasetMapping(object):
         """
         mapping = {}
         for field in self.fields:
-            key = field.id
+            key = field.label
             mapping[key] = field.type()      
         return mapping
 
@@ -94,8 +94,13 @@ class DatasetRecords(object):
         self.records = []
 
     def append(self, record:Record) -> bool:
-        self.record.append(record.to_doc())
-
+        self.records.append(record)
+    
+    def to_docs(self):
+        docs = []
+        for record in self.records:
+            docs.append(record.to_doc())
+        return docs
 
 class Extractor(object):
 
@@ -120,7 +125,7 @@ class Extractor(object):
 
 
 def generate_actions(extractor:Extractor, index:str) -> dict:
-    docs = extractor.extract()
+    docs = extractor.extract().to_docs()
     for doc in docs:
         doc["_index"] = index
         yield doc
@@ -138,15 +143,16 @@ def create_dataset(extractor:Extractor) -> bool:
     """
     
     #Create an Elastic search client
-    client = Elasticsearch({"host":"localhost", "port":"9200"})
+    client = Elasticsearch(hosts=[{"host":'elasticsearch'}], retry_on_timeout = True)
 
     #Create a new index 
-    index = extractor.params["index"]
-    mapping = extractor.extract_mapping()
-    client.indices.create(index=index, body = mapping)
+    index = extractor.index
+    mapping = extractor.extract_mapping().get_elastic_mapping()
+    client_response = client.indices.create(index=index, body = mapping)
+    print(client_response)
     
     #Add data
     data_response = helpers.bulk(client, generate_actions(extractor, index))
-
+    print(data_response)
 
 

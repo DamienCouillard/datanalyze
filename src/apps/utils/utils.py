@@ -1,10 +1,11 @@
 from datetime import date
+from numpy import dtype
 
 PANDAS_TYPE = {
-                    'int64' : int,
-                    'float64' : float,
-                    'object' : str,
-                    'datetime64[ns]' : date
+                    dtype('int64') : int,
+                    dtype('float64') : float,
+                    dtype('object') : str,
+                    dtype('datetime64[ns]') : date
                 }
 
 ELASTIC_TYPE = {

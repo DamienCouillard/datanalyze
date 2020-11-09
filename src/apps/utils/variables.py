@@ -1,7 +1,7 @@
 from apps.extractors.csv import CSVExtractor
 
 EXTRACTORS = {
-                'csv' : CSVExtractor
+                'CSV' : CSVExtractor
                 
             }
 
