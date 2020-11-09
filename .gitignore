@@ -5,3 +5,5 @@ db.sqlite3
 /src/config/__pycache__/
 /src/apps/dataset/__pycache__/
 /src/apps/dataset/migrations/__pycache__/
+/src/apps/utils/__pycache__/
+/src/apps/extractors/__pycache__/
