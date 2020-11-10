@@ -42,16 +42,6 @@ export default class CustomModal extends Component {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="description">Index</Label>
-              <Input
-                type="text"
-                name="index"
-                value={this.state.activeItem.index}
-                onChange={this.handleChange}
-                placeholder="Enter dataset index"
-              />
-            </FormGroup>
-            <FormGroup>
               <Label for="description">Description</Label>
               <Input
                 type="text"

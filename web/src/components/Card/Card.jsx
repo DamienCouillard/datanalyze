@@ -9,7 +9,6 @@ class DatasetCard extends React.Component {
         super(props);
         this.state = {
           activeItem: {
-            id: "",
             label: "",
             description: "",
             index: "",
@@ -35,9 +34,9 @@ class DatasetCard extends React.Component {
     
     handleSubmit = item => {
     this.toggle();
-    if (item.id) {
+    if (item.index) {
         axios
-        .put(`http://localhost:8000/api/datasets/${item.id}/`, item)
+        .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
         .then(res => this.refreshList());
         return;
     }
@@ -51,14 +50,16 @@ class DatasetCard extends React.Component {
     };
 
     handleDelete = item => {
+      console.log(item)
         axios
-          .delete(`http://localhost:8000/api/datasets/${item.id}`)
-          .then(res => this.refreshList());
+          .delete(`http://localhost:8000/api/datasets/${item.index}/`)
+          .then(res => this.refreshList())
+          .catch(err => console.log(err));
       };
     
     render() {
       return ( 
-        <Col class="md-12">
+        <Col className="md-12">
             <Card style={{ width: '40rem' }}>
                 { console.log(this.props.item) }
                 <Card.Body>
