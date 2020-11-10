@@ -4,7 +4,7 @@ import React, {
 import {
   Container,
   Row,
-  Col
+  Col,
 } from "react-bootstrap";
 import Sidebar from "../components/Sidebar/Sidebar";
 import axios from "axios";
@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from '../components/Modal/Modal'
 import NavbarCustom from '../components/Navbar/Navbar'
 import CardCustom from '../components/Card/Card'
-
+import Notification, { notify } from '../components/Notification/Notification'
 
 class Datasets extends Component {
 
@@ -21,7 +21,6 @@ class Datasets extends Component {
     super(props);
     this.state = {
       activeItem: {
-        id: "",
         label: "",
         description: "",
         index: "",
@@ -56,26 +55,27 @@ class Datasets extends Component {
     this.setState({ modal: !this.state.modal });
   };
 
-  handleSubmit = item => {
+  handleSubmit = async item => {
     this.toggle();
-    if (item.id) {
-      axios
-        .put(`http://localhost:8000/api/datasets/${item.id}/`, item)
-        .then(res => this.refreshList());
+    if (item.index && item.index !== "__dataset_init_index_4111898256585") {
+      await axios
+        .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
+        .then(res => { this.refreshList(); notify("Update succeed"); alert();})
+        .catch(err => {notify("Update failed")});
       return;
     }
     console.log(item)
-    axios
+    await axios
       .post("http://localhost:8000/api/datasets/", item)
-      .then(res => this.refreshList())
+      .then(res => {this.refreshList(); notify("Import succeed");})
       .catch(err => {
         // what now?
-        console.log(err);
+        notify("Import failed");
       });
   };
 
   createItem = () => {
-    const item = { label: "", description: "", index:"", source:"", source_type:""};
+    const item = { label: "", description: "", index:"__dataset_init_index_4111898256585", source:"", source_type:""};
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
   
@@ -93,7 +93,7 @@ class Datasets extends Component {
               <Col xs={10} id="page-content-wrapper">
               <Row>
                 <Col></Col>
-                <div class="mx-20 align-self-end">
+                <div className="mx-20 align-self-end">
                   <button onClick={this.createItem} className="btn btn-primary">
                     Add dataset
                   </button>
@@ -106,7 +106,6 @@ class Datasets extends Component {
               </Row>
               </Col>
             </Row>
-
           </Container>
           {this.state.modal ? (
           <Modal activeItem={this.state.activeItem} toggle={this.toggle} onSave={this.handleSubmit} />

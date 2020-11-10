@@ -10,10 +10,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-bootstrap --silent
-RUN npm install bootstrap --silent
-RUN npm install mdbreact --silent
+RUN npm install react-bootstrap bootstrap mdbreact event-emitter styled-components --silent
 
 # add app
 COPY . ./
