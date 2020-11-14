@@ -20,6 +20,7 @@ class DatasetCard extends React.Component {
       }
 
       refreshList = () => {
+        // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
         axios
           .get("http://localhost:8000/api/datasets/")
           .then(res => this.setState({
@@ -33,6 +34,7 @@ class DatasetCard extends React.Component {
       };
     
     handleSubmit = item => {
+    // call the POST or PUT dataset endpoint to create or update dataset
     this.toggle();
     if (item.index) {
         axios
@@ -46,10 +48,12 @@ class DatasetCard extends React.Component {
     };
 
     editItem = item => {
+      // call a modal component to edit a selected dataset
         this.setState({ activeItem: item, modal: !this.state.modal });
     };
 
     handleDelete = item => {
+      // call the DELETE dataset endpoint to remove data from elasticsearch and django SQLite
       console.log(item)
         axios
           .delete(`http://localhost:8000/api/datasets/${item.index}/`)

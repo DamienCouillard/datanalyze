@@ -125,6 +125,7 @@ class Extractor(object):
 
 
 def generate_actions(extractor:Extractor, index:str) -> dict:
+    """Generates actions to use the bulk helper to store data into an elasticsearch index"""
     docs = extractor.extract().to_docs()
     for doc in docs:
         doc["_index"] = index
