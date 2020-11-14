@@ -13,8 +13,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from '../components/Modal/Modal'
 import NavbarCustom from '../components/Navbar/Navbar'
 import CardCustom from '../components/Card/Card'
-import Notification, { notify } from '../components/Notification/Notification'
-
 class Datasets extends Component {
 
   constructor(props) {
@@ -34,6 +32,7 @@ class Datasets extends Component {
   }
 
   refreshList = () => {
+    // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
     axios
       .get("http://localhost:8000/api/datasets/")
       .then(res => this.setState({
@@ -43,15 +42,18 @@ class Datasets extends Component {
   };
 
   componentDidMount() {
+    // this function is called when the dataset page is loaded
     this.refreshList();
   }
 
   renderItems = () => {
+    // map the list of datasets 
       const newItems = this.state.datasetsList
       return newItems.map(item => { return <li><CardCustom item= {item}/></li> })
   };
 
   toggle = () => {
+    // trigger the modal
     this.setState({ modal: !this.state.modal });
   };
 
@@ -61,20 +63,21 @@ class Datasets extends Component {
       await axios
         .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
         .then(res => { this.refreshList(); notify("Update succeed"); alert();})
-        .catch(err => {notify("Update failed")});
+        // .catch(err => {notify("Update failed")});
       return;
     }
     console.log(item)
     await axios
       .post("http://localhost:8000/api/datasets/", item)
       .then(res => {this.refreshList(); notify("Import succeed");})
-      .catch(err => {
+      /* .catch(err => {
         // what now?
         notify("Import failed");
-      });
+      })*/;
   };
 
   createItem = () => {
+    // open a modal for item creation
     const item = { label: "", description: "", index:"__dataset_init_index_4111898256585", source:"", source_type:""};
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
