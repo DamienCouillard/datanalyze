@@ -19,6 +19,7 @@ export default class CustomModal extends Component {
     };
   }
   handleChange = e => {
+    // link the form value to the dataset value to create or update
     let { name, value } = e.target;
     const activeItem = { ...this.state.activeItem, [name]: value };
     this.setState({ activeItem });
