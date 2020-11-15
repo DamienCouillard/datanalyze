@@ -62,14 +62,14 @@ class Datasets extends Component {
     if (item.index && item.index !== "__dataset_init_index_4111898256585") {
       await axios
         .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
-        .then(res => { this.refreshList(); notify("Update succeed"); alert();})
+        .then(res => { this.refreshList();})
         // .catch(err => {notify("Update failed")});
       return;
     }
     console.log(item)
     await axios
       .post("http://localhost:8000/api/datasets/", item)
-      .then(res => {this.refreshList(); notify("Import succeed");})
+      .then(res => {this.refreshList();})
       /* .catch(err => {
         // what now?
         notify("Import failed");
