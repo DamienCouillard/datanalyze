@@ -33,5 +33,6 @@ services:
         command: npm start --silent
         volumes:
             - ./web:/code/web
+            - /web/node_modules
         ports:
             - "3000:3000"
