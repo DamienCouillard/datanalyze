@@ -7,6 +7,18 @@ services:
         ports:
         - 9200:9200
         - 9300:9300
+        environment: 
+        - discovery.type=single-node
+        - cluster.name=docker-cluster
+        - bootstrap.memory_lock=true
+        - transport.host=127.0.0.1
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - http.host=0.0.0.0
+        - http.port=9200
+        - "http.cors.allow-origin=http://localhost:3000"
+        - "http.cors.enabled=true"
+        - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+        - "http.cors.allow-credentials=true"
         container_name: elasticsearch
 
     kibana:
