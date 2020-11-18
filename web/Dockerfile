@@ -5,7 +5,7 @@ WORKDIR /code/web
 
 COPY package*.json ./
 
-RUN npm install react-bootstrap bootstrap mdbreact event-emitter styled-components @appbaseio/reactivesearch --silent --save
+RUN npm install react-bootstrap bootstrap mdbreact event-emitter styled-components @appbaseio/reactivesearch react-virtualized --silent --save
 
 EXPOSE 3000
 
