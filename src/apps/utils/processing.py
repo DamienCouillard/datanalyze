@@ -7,12 +7,12 @@ class PreProcessedDataset(object):
     def __init__(self, index:str) -> None:
         self.index = index
         self.mapping = []
-        self.dataframe = None
+        self.dataframe = pd.DataFrame()
         self.set_dataframe()
         self.set_mapping()
     
     def set_dataframe(self) -> None:
-        es = Elasticsearch(["http://localhost:9200"],timeout=600)
+        es = Elasticsearch(hosts=[{"host":'elasticsearch'}], retry_on_timeout = True)
         doc = {
         'size' : 10000,
         'query': {
@@ -29,7 +29,7 @@ class PreProcessedDataset(object):
 
     def get_hits(self, response:dict) -> None:
         """extract data from response hits and add them to the dataframe"""
-        if self.dataframe:
+        if not self.dataframe.empty:
             df_concat = Select.from_dict(response).to_pandas()
             frames = [self.dataframe, df_concat]
             self.dataframe = pd.concat(frames)

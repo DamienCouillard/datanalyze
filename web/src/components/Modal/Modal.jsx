@@ -8,23 +8,23 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 
 export default class CustomModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: this.props.activeItem
+      activeItem: this.props.activeItem,
     };
   }
-  handleChange = e => {
+  handleChange = (e) => {
     // link the form value to the dataset value to create or update
     let { name, value } = e.target;
     const activeItem = { ...this.state.activeItem, [name]: value };
     this.setState({ activeItem });
   };
-  
+
   render() {
     const { toggle, onSave } = this.props;
     return (
@@ -70,11 +70,11 @@ export default class CustomModal extends Component {
                 value={this.state.activeItem.source_type}
                 onChange={this.handleChange}
                 placeholder="Enter dataset source type"
-                defaultValue='CSV'
+                defaultValue="CSV"
               >
                 <option> </option>
                 <option>CSV</option>
-                </Input>
+              </Input>
             </FormGroup>
           </Form>
         </ModalBody>

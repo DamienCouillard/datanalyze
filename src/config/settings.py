@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'apps',
     'apps.dataset',
+    'apps.processing',
     'corsheaders',
     'rest_framework',
     'django_elasticsearch_dsl',
