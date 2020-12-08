@@ -1,0 +1,86 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 100vh !important;
+    z-index: 100;
+    padding: 0px 0 0;
+    background-color: #264653;
+}
+
+.sidebar-item {
+    color: white;
+    font-size: 20px;
+    border-bottom-style: solid;
+}
+
+a.sidebar-item:hover {
+    cursor: pointer;
+    color: lightgray;
+}
+
+.sidebar-title {
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    margin: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 6em;
+}
+
+.page-title {
+    font-size: 25px;
+    color: #264653;
+    margin: 20px;
+
+}
+
+.add-button {
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #2A9D8F;
+    border: 0ch;
+    color: white;
+    font-weight: bold;
+    margin: 20px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.button {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+}
+
+.edit-button {
+    right: 90px;
+    color: white;
+    background-color: #264653;
+}
+
+.delete-button {
+    right: 10px;
+    color: white;
+    background-color: #E76F51;
+}
+
+ul {
+    list-style-type: none;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+li {
+    display: inline-block;
+}
