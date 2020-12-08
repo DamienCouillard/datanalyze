@@ -54,32 +54,41 @@ class DatasetCard extends React.Component {
 
   handleDelete = (item) => {
     // call the DELETE dataset endpoint to remove data from elasticsearch and django SQLite
-    console.log(item);
     axios
       .delete(`http://localhost:8000/api/datasets/${item.index}/`)
       .then((res) => this.refreshList())
       .catch((err) => console.log(err));
   };
 
+  renderDescription = (desc) => {
+    if (desc.length > 256) {
+      return desc.substring(0, 253).concat("...");
+    } else {
+      return desc;
+    }
+  };
+
   render() {
     return (
       <Col className="md-12">
-        <Card style={{ width: "40rem" }}>
-          {console.log(this.props.item)}
+        <Card style={{ width: "40rem", height: "15rem" }}>
           <Card.Body>
             <Card.Title>{this.props.item.label}</Card.Title>
-            <Card.Text>{this.props.item.description}</Card.Text>
+            <Card.Text>
+              {this.renderDescription(this.props.item.description)}
+            </Card.Text>
             <button
               onClick={() => this.editItem(this.props.item)}
-              className="btn btn-secondary mr-2"
+              className="edit-button button btn btn-secondary mr-2 "
             >
               {" "}
               Edit{" "}
             </button>
             <button
               onClick={() => this.handleDelete(this.props.item)}
-              className="btn btn-danger"
+              className="delete-button button btn btn-danger"
             >
+              {" "}
               Delete{" "}
             </button>
           </Card.Body>

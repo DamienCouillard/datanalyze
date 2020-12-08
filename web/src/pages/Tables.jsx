@@ -3,9 +3,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
 import Sidebar from "../components/Sidebar/Sidebar";
-import "../style/Dashboard.css";
+import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavbarCustom from "../components/Navbar/Navbar";
 import Datagrid from "../components/Datagrid/Datagrid";
 
 class Tables extends Component {
@@ -59,15 +58,13 @@ class Tables extends Component {
   render() {
     return (
       <>
-        <Container fluid>
-          <NavbarCustom />
-        </Container>
-        <Container fluid>
+        <Container fluid className="p-0">
           <Row>
             <Col xs={2} id="sidebar-wrapper">
               <Sidebar />
             </Col>
             <Col xs={10} id="page-content-wrapper">
+              <h2 className="page-title">Dataset Explorer</h2>
               <Form>
                 <FormGroup>
                   <Label for="dataset">Select a dataset</Label>

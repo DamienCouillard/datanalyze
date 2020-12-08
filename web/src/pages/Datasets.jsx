@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../components/Sidebar/Sidebar";
 import axios from "axios";
-import "../style/Dashboard.css";
+import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from "../components/Modal/Modal";
-import NavbarCustom from "../components/Navbar/Navbar";
 import CardCustom from "../components/Card/Card";
 class Datasets extends Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class Datasets extends Component {
     const newItems = this.state.datasetsList;
     return newItems.map((item) => {
       return (
-        <li>
+        <li key={item.index}>
           <CardCustom item={item} />
         </li>
       );
@@ -68,7 +67,6 @@ class Datasets extends Component {
       // .catch(err => {notify("Update failed")});
       return;
     }
-    console.log(item);
     await axios
       .post("http://localhost:8000/api/datasets/", item)
       .then((res) => {
@@ -95,20 +93,21 @@ class Datasets extends Component {
   render() {
     return (
       <>
-        <Container fluid>
-          <NavbarCustom />
-        </Container>
-        <Container fluid>
+        <Container fluid className="p-0">
           <Row>
             <Col xs={2} id="sidebar-wrapper">
               <Sidebar />
             </Col>
             <Col xs={10} id="page-content-wrapper">
               <Row>
-                <Col></Col>
-                <div className="mx-20 align-self-end">
-                  <button onClick={this.createItem} className="btn btn-primary">
-                    Add dataset
+                <div>
+                  <h2 className="page-title">Datasets index</h2>
+                  <button
+                    onClick={this.createItem}
+                    className="add-button"
+                    title="Add a dataset"
+                  >
+                    +
                   </button>
                 </div>
               </Row>
