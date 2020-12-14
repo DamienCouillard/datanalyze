@@ -4,7 +4,7 @@ from apps.processors import scatter
 
 EXTRACTORS = {
     'CSV': csv.CSVExtractor,
-    'Excel' : xslx.XLSXExtractor,
+    'Excel' : xlsx.XLSXExtractor,
 
 }
 
