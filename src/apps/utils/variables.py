@@ -1,13 +1,14 @@
-from apps.extractors import csv
+from apps.extractors import csv, xlsx
 
 from apps.processors import scatter
 
 EXTRACTORS = {
-    'CSV': csv.CSVExtractor
+    'CSV': csv.CSVExtractor,
+    'Excel' : xlsx.XLSXExtractor,
 
 }
 
-EXTRACTORS_LIST = [('CSV', 'CSV'), ]
+EXTRACTORS_LIST = [('CSV', 'CSV'), ('Excel', 'Excel')]
 
 ANALYSIS_TOOLS = {
     'scatter': scatter.scatter
