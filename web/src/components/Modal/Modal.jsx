@@ -74,6 +74,7 @@ export default class CustomModal extends Component {
               >
                 <option> </option>
                 <option>CSV</option>
+                <option>Excel</option>
               </Input>
             </FormGroup>
           </Form>
