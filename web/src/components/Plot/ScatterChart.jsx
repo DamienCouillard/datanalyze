@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Form, FormGroup, Label, Input } from "reactstrap";
+import { Form, FormGroup, Label } from "reactstrap";
 import axios from "axios";
 import {
   ScatterChart,
@@ -10,7 +10,9 @@ import {
   Tooltip,
   Scatter,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
+import Select from "react-select";
 
 export default class Line extends Component {
   constructor(props) {
@@ -19,8 +21,8 @@ export default class Line extends Component {
       activeItem: this.props.activeItem,
       mapping: this.props.mapping,
       data: [],
-      X: "",
-      Y: "",
+      X: undefined,
+      Y: undefined,
     };
   }
 
@@ -34,9 +36,9 @@ export default class Line extends Component {
 
   setXChange = (e) => {
     // link the form value to the dataset value to cplot in the datagrid
-    let { value } = e.target;
+    let value = e.value;
     this.setState({ X: value }, () => {
-      if (this.state.Y !== "") {
+      if (this.state.Y !== undefined) {
         this.getData();
       }
     });
@@ -44,12 +46,13 @@ export default class Line extends Component {
 
   setYChange = (e) => {
     // link the form value to the dataset value to cplot in the datagrid
-    let { value } = e.target;
+    let value = e.value;
     this.setState({ Y: value }, () => {
-      if (this.state.X !== "") {
+      if (this.state.X !== undefined) {
         this.getData();
       }
     });
+    console.log(this.state.X, this.state.Y);
   };
 
   getData = () => {
@@ -66,10 +69,9 @@ export default class Line extends Component {
   };
 
   plotLine = () => {
-    if (this.state.data !== []) {
-      console.log(this.state.data);
+    if (this.state.X !== undefined && this.state.Y !== undefined) {
       return (
-        <ResponsiveContainer width="75%" aspect={2}>
+        <ResponsiveContainer width="75%" aspect={2} className="chart">
           <ScatterChart
             margin={{
               top: 20,
@@ -83,10 +85,11 @@ export default class Line extends Component {
             <YAxis type="number" dataKey={this.state.Y} name={this.state.Y} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} />
             <Scatter
-              name="Scatter plot"
+              name={this.state.Y}
               data={this.state.data}
               fill="#8884d8"
             />
+            <Legend />
           </ScatterChart>
         </ResponsiveContainer>
       );
@@ -101,23 +104,29 @@ export default class Line extends Component {
             <Col>
               <FormGroup>
                 <Label for="dataset">Select the X axis</Label>
-                <Input type="select" name="xAxis" onChange={this.setXChange}>
-                  <option></option>
-                  {this.chooseAxis()}
-                </Input>
+                <Select
+                  name="XAxis"
+                  options={this.state.mapping}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={this.setXChange}
+                />
               </FormGroup>
             </Col>
             <Col>
               <FormGroup>
                 <Label for="dataset">Select the Y axis</Label>
-                <Input type="select" name="yAxis" onChange={this.setYChange}>
-                  <option></option>
-                  {this.chooseAxis()}
-                </Input>
+                <Select
+                  name="YAxis"
+                  options={this.state.mapping}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={this.setYChange}
+                />
               </FormGroup>
             </Col>
           </Row>
-          {this.plotLine()}
+          <Row>{this.plotLine()}</Row>
         </Form>
       </Container>
     );

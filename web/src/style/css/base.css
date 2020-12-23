@@ -84,3 +84,8 @@ ul {
 li {
     display: inline-block;
 }
+
+.chart {
+    float: none;
+    margin: 0  auto;
+}

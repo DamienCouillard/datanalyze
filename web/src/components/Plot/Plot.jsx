@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Line from "./LineChart";
+import Line from "./ScatterChart";
 
 export default class Plot extends Component {
   constructor(props) {
