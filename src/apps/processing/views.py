@@ -21,7 +21,11 @@ def initialize_analysis(request):
     try:
         existing = Dataset.objects.get(index=index)
         DATASET = PreProcessedDataset(index)
-        data = {"mapping" : DATASET.mapping}
+        mapping = []
+        for item in DATASET.mapping:
+            mapping.append({"value":item, "label":item})
+        data = {"mapping" : mapping}
+        
         return JsonResponse(data=data)
     except Dataset.DoesNotExist:
         return HttpResponseNotFound("Cannot find the dataset with index {}".format(index))
