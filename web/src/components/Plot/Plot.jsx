@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Line from "./ScatterChart";
+import LinearReg from "./LinearRegression";
 
 export default class Plot extends Component {
   constructor(props) {
@@ -17,6 +18,13 @@ export default class Plot extends Component {
       case "scatter":
         return (
           <Line
+            activeItem={this.state.activeItem}
+            mapping={this.state.mapping}
+          />
+        );
+      case "linearreg":
+        return (
+          <LinearReg
             activeItem={this.state.activeItem}
             mapping={this.state.mapping}
           />
