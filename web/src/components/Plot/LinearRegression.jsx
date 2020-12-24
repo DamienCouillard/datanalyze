@@ -73,7 +73,7 @@ export default class LinearReg extends Component {
 
   plotLine = () => {
     if (this.state.X !== undefined && this.state.Y !== undefined) {
-      console.log(this.state.reg);
+      console.log(this.state.data);
       return (
         <>
           <ResponsiveContainer width="75%" aspect={2} className="chart">
@@ -90,18 +90,8 @@ export default class LinearReg extends Component {
               <XAxis type="number" dataKey={this.state.X} name={this.state.X} />
               <YAxis />
               <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Scatter
-                type="number"
-                dataKey={this.state.Y}
-                name={this.state.Y}
-                fill="#264653"
-              />
-              <Line
-                name="Linear regression"
-                dataKey="Linear regression"
-                stroke="#E76F51"
-                dot={false}
-              />
+              <Scatter type="number" dataKey={this.state.Y} fill="#264653" />
+              <Line dataKey="Linear regression" stroke="#E76F51" dot={false} />
               <Legend />
             </ComposedChart>
           </ResponsiveContainer>

@@ -65,7 +65,11 @@ class Analyze extends Component {
     // map the list of datasets in the form
     const newItems = this.state.datasetsList;
     return newItems.map((item) => {
-      return <option value={item.index}>{item.label}</option>;
+      return (
+        <option key={item.index} value={item.index}>
+          {item.label}
+        </option>
+      );
     });
   };
 
@@ -73,7 +77,11 @@ class Analyze extends Component {
     // map the list of tools in the form
     const newItems = this.state.analysisTools;
     return newItems.map((item) => {
-      return <option value={item.value}>{item.label}</option>;
+      return (
+        <option key={item.value} value={item.value}>
+          {item.label}
+        </option>
+      );
     });
   };
 
