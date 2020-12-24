@@ -1,6 +1,6 @@
 from apps.extractors import csv, xlsx
 
-from apps.processors import scatter
+from apps.processors import scatter, linearreg
 
 EXTRACTORS = {
     'CSV': csv.CSVExtractor,
@@ -11,13 +11,19 @@ EXTRACTORS = {
 EXTRACTORS_LIST = [('CSV', 'CSV'), ('Excel', 'Excel')]
 
 ANALYSIS_TOOLS = {
-    'scatter': scatter.scatter
+    'scatter': scatter.scatter,
+    'linearreg': linearreg.linearreg,
 
 }
 TOOLS_LIST = [
     {
-        "name": 'Scatter plot',
-        "label": "scatter"
+        "label": 'Scatter plot',
+        "value": "scatter"
     },
+    {
+        "label": 'Linear regression',
+        "value": "linearreg"
+    },
+
 
 ]

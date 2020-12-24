@@ -6,8 +6,10 @@ def scatter(dataset, params):
     X = params["X"]
     Y = params["Y"]
     Y = Y.split(',')
-    print(X, Y)
-    df = dataset[[X] + Y]
+    if not X in Y:
+        df = dataset[[X] + Y]
+    else:
+        df = dataset[Y]
     result = df.to_json(orient="records")
     parsed = json.loads(result)
     return {"data": parsed}

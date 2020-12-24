@@ -11,17 +11,18 @@ import {
   ResponsiveContainer,
   Legend,
   ComposedChart,
+  Line,
 } from "recharts";
 import Select from "react-select";
 
-export default class Line extends Component {
+export default class LinearReg extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: this.props.activeItem,
       mapping: this.props.mapping,
       data: [],
-      reg: [],
+      res: [],
       X: undefined,
       Y: undefined,
     };
@@ -59,11 +60,12 @@ export default class Line extends Component {
   getData = () => {
     axios
       .get(
-        `http://localhost:8000/api/analyze/tools?tool=scatter&X=${this.state.X}&Y=${this.state.Y}`
+        `http://localhost:8000/api/analyze/tools?tool=linearreg&X=${this.state.X}&Y=${this.state.Y}`
       )
       .then((res) => {
         this.setState({
           data: res.data["data"],
+          res: res.data["res"],
         });
       })
       .catch((err) => console.log(err));
@@ -71,28 +73,49 @@ export default class Line extends Component {
 
   plotLine = () => {
     if (this.state.X !== undefined && this.state.Y !== undefined) {
+      console.log(this.state.reg);
       return (
-        <ResponsiveContainer width="75%" aspect={2} className="chart">
-          <ComposedChart
-            margin={{
-              top: 20,
-              right: 20,
-              bottom: 20,
-              left: 20,
-            }}
-          >
-            <CartesianGrid />
-            <XAxis type="number" dataKey={this.state.X} name={this.state.X} />
-            <YAxis type="number" dataKey={this.state.Y} name={this.state.Y} />
-            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-            <Scatter
-              name={this.state.Y}
+        <>
+          <ResponsiveContainer width="75%" aspect={2} className="chart">
+            <ComposedChart
+              margin={{
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20,
+              }}
               data={this.state.data}
-              fill="#264653"
-            />
-            <Legend />
-          </ComposedChart>
-        </ResponsiveContainer>
+            >
+              <CartesianGrid />
+              <XAxis type="number" dataKey={this.state.X} name={this.state.X} />
+              <YAxis />
+              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+              <Scatter
+                type="number"
+                dataKey={this.state.Y}
+                name={this.state.Y}
+                fill="#264653"
+              />
+              <Line
+                name="Linear regression"
+                dataKey="Linear regression"
+                stroke="#E76F51"
+                dot={false}
+              />
+              <Legend />
+            </ComposedChart>
+          </ResponsiveContainer>
+          <Container fluid>
+            <Row>
+              Results : R<sup>2</sup> = {this.state.res["r2"]} {"  ,    "} Mean
+              Square Error = {this.state.res["square_err"]}
+            </Row>
+            <Row>
+              Model : {this.state.Y} = {this.state.res["coef"]} * {this.state.X}{" "}
+              + {this.state.res["intercept"]}
+            </Row>
+          </Container>
+        </>
       );
     }
   };

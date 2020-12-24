@@ -73,7 +73,7 @@ class Analyze extends Component {
     // map the list of tools in the form
     const newItems = this.state.analysisTools;
     return newItems.map((item) => {
-      return <option value={item.label}>{item.name}</option>;
+      return <option value={item.value}>{item.label}</option>;
     });
   };
 
