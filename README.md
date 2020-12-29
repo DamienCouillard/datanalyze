@@ -35,7 +35,7 @@ $ docker-compose down -v
 The repository changelog is weekly updated. It is more a students work report than a real versionning. This section only contains last week report. To see the full changelog, please refer to Changelog.md in the root directory.
 
 ---
- **Week 5** - from 09/11/2020 to 15/11/2020
+ **Week 6** - from 09/11/2020 to 15/11/2020
 
   * Linting and beautify code
   * Documentation on Elasticsearch datagrid with ReactJS
