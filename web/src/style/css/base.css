@@ -56,6 +56,9 @@ a.sidebar-item:hover {
     top: 5px;
 }
 
+.ml-select {
+    margin: 5px ;
+}
 .button {
     display: block;
     position: absolute;
