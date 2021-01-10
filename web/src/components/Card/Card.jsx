@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Col } from "react-bootstrap";
 import axios from "axios";
 import Modal from "../Modal/Modal";
+import { trackPromise } from "react-promise-tracker";
 
 class DatasetCard extends React.Component {
   constructor(props) {
@@ -19,14 +20,16 @@ class DatasetCard extends React.Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
-    axios
-      .get("http://localhost:8000/api/datasets/")
-      .then((res) =>
-        this.setState({
-          datasetsList: res.data,
-        })
-      )
-      .catch((err) => console.log(err));
+    trackPromise(
+      axios
+        .get("http://localhost:8000/api/datasets/")
+        .then((res) =>
+          this.setState({
+            datasetsList: res.data,
+          })
+        )
+        .catch((err) => console.log(err))
+    );
   };
 
   toggle = () => {
@@ -37,14 +40,18 @@ class DatasetCard extends React.Component {
     // call the POST or PUT dataset endpoint to create or update dataset
     this.toggle();
     if (item.index) {
-      axios
-        .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
-        .then((res) => this.refreshList());
+      trackPromise(
+        axios
+          .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
+          .then((res) => this.refreshList())
+      );
       return;
     }
-    axios
-      .post("http://localhost:8000/api/datasets/", item)
-      .then((res) => this.refreshList());
+    trackPromise(
+      axios
+        .post("http://localhost:8000/api/datasets/", item)
+        .then((res) => this.refreshList())
+    );
   };
 
   editItem = (item) => {
@@ -54,10 +61,13 @@ class DatasetCard extends React.Component {
 
   handleDelete = (item) => {
     // call the DELETE dataset endpoint to remove data from elasticsearch and django SQLite
-    axios
-      .delete(`http://localhost:8000/api/datasets/${item.index}/`)
-      .then((res) => this.refreshList())
-      .catch((err) => console.log(err));
+    trackPromise(
+      axios
+        .delete(`http://localhost:8000/api/datasets/${item.index}/`)
+        .then((res) => this.refreshList())
+        .catch((err) => console.log(err))
+    );
+    window.location.reload();
   };
 
   renderDescription = (desc) => {

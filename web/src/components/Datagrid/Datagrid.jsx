@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Table, Pagination } from "react-bootstrap";
-
+import { trackPromise } from "react-promise-tracker";
 export default class CustomModal extends Component {
   constructor(props) {
     super(props);
@@ -39,26 +39,30 @@ export default class CustomModal extends Component {
 
   refreshRecords = (from) => {
     // refresh the list of 20 records by calling elasticsearch
-    axios
-      .get(
-        `http://localhost:9200/${this.state.activeItem}/_search?size=15&from=${from}`
-      )
-      .then((res) => {
-        this.getRecords(res.data);
-        this.getMapping();
-      })
-      .catch((err) => console.log(err));
+    trackPromise(
+      axios
+        .get(
+          `http://localhost:9200/${this.state.activeItem}/_search?size=15&from=${from}`
+        )
+        .then((res) => {
+          this.getRecords(res.data);
+          this.getMapping();
+        })
+        .catch((err) => console.log(err))
+    );
   };
 
   refreshSize = () => {
     // refresh the list of 20 records by calling elasticsearch
-    axios
-      .get(`http://localhost:9200/${this.state.activeItem}/_stats`)
-      .then((res) => {
-        var len = res.data["_all"]["primaries"]["docs"]["count"];
-        this.setState({ size: len });
-      })
-      .catch((err) => console.log(err));
+    trackPromise(
+      axios
+        .get(`http://localhost:9200/${this.state.activeItem}/_stats`)
+        .then((res) => {
+          var len = res.data["_all"]["primaries"]["docs"]["count"];
+          this.setState({ size: len });
+        })
+        .catch((err) => console.log(err))
+    );
   };
 
   componentDidMount() {
