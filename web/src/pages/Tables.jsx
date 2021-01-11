@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Datagrid from "../components/Datagrid/Datagrid";
-import { usePromiseTracker, trackPromise } from "react-promise-tracker";
+import { usePromiseTracker } from "react-promise-tracker";
 import Loader from "react-loader-spinner";
 
 const LoadingIndicator = (props) => {
@@ -41,16 +41,15 @@ class Tables extends Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
-    trackPromise(
-      axios
-        .get("http://localhost:8000/api/datasets/")
-        .then((res) =>
-          this.setState({
-            datasetsList: res.data,
-          })
-        )
-        .catch((err) => console.log(err))
-    );
+
+    axios
+      .get("http://localhost:8000/api/datasets/")
+      .then((res) =>
+        this.setState({
+          datasetsList: res.data,
+        })
+      )
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {

@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Plot from "../components/Plot/Plot";
-import { usePromiseTracker, trackPromise } from "react-promise-tracker";
+import { usePromiseTracker } from "react-promise-tracker";
 import Loader from "react-loader-spinner";
 
 const LoadingIndicator = (props) => {
@@ -50,18 +50,16 @@ class Analyze extends Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
-    trackPromise(
-      axios
-        .get("http://localhost:8000/api/datasets/")
-        .then((res) => this.setState({ datasetsList: res.data }))
-        .catch((err) => console.log(err))
-    );
-    trackPromise(
-      axios
-        .get("http://localhost:8000/api/tools/")
-        .then((res) => this.setState({ analysisTools: res.data }))
-        .catch((err) => console.log(err))
-    );
+
+    axios
+      .get("http://localhost:8000/api/datasets/")
+      .then((res) => this.setState({ datasetsList: res.data }))
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:8000/api/tools/")
+      .then((res) => this.setState({ analysisTools: res.data }))
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {
@@ -70,16 +68,14 @@ class Analyze extends Component {
   }
 
   getMapping = () => {
-    trackPromise(
-      axios
-        .get(`http://localhost:8000/api/analyze?index=${this.state.activeItem}`)
-        .then((res) => {
-          this.setState({
-            mapping: res.data["mapping"],
-          });
-        })
-        .catch((err) => console.log(err))
-    );
+    axios
+      .get(`http://localhost:8000/api/analyze?index=${this.state.activeItem}`)
+      .then((res) => {
+        this.setState({
+          mapping: res.data["mapping"],
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   chooseDataset = () => {

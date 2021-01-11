@@ -20,16 +20,15 @@ class DatasetCard extends React.Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
-    trackPromise(
-      axios
-        .get("http://localhost:8000/api/datasets/")
-        .then((res) =>
-          this.setState({
-            datasetsList: res.data,
-          })
-        )
-        .catch((err) => console.log(err))
-    );
+
+    axios
+      .get("http://localhost:8000/api/datasets/")
+      .then((res) =>
+        this.setState({
+          datasetsList: res.data,
+        })
+      )
+      .catch((err) => console.log(err));
   };
 
   toggle = () => {
@@ -61,12 +60,10 @@ class DatasetCard extends React.Component {
 
   handleDelete = (item) => {
     // call the DELETE dataset endpoint to remove data from elasticsearch and django SQLite
-    trackPromise(
-      axios
-        .delete(`http://localhost:8000/api/datasets/${item.index}/`)
-        .then((res) => this.refreshList())
-        .catch((err) => console.log(err))
-    );
+    axios
+      .delete(`http://localhost:8000/api/datasets/${item.index}/`)
+      .then((res) => this.refreshList())
+      .catch((err) => console.log(err));
     window.location.reload();
   };
 

@@ -41,16 +41,15 @@ class Datasets extends Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
-    trackPromise(
-      axios
-        .get("http://localhost:8000/api/datasets/")
-        .then((res) =>
-          this.setState({
-            datasetsList: res.data,
-          })
-        )
-        .catch((err) => console.log(err))
-    );
+
+    axios
+      .get("http://localhost:8000/api/datasets/")
+      .then((res) =>
+        this.setState({
+          datasetsList: res.data,
+        })
+      )
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {
