@@ -12,3 +12,5 @@ db.sqlite3
 
 #exclude vscode
 .vscode
+
+*.pyc
