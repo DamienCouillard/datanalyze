@@ -6,7 +6,22 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Plot from "../components/Plot/Plot";
+import { usePromiseTracker } from "react-promise-tracker";
+import Loader from "react-loader-spinner";
 
+const LoadingIndicator = (props) => {
+  const { promiseInProgress } = usePromiseTracker();
+  console.log(promiseInProgress);
+  return (
+    promiseInProgress && (
+      <div className="loader-div">
+        <div className="loader">
+          <Loader type="ThreeDots" color="#264653" height="100" width="100" />
+        </div>
+      </div>
+    )
+  );
+};
 class Analyze extends Component {
   constructor(props) {
     super(props);
@@ -35,10 +50,12 @@ class Analyze extends Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
+
     axios
       .get("http://localhost:8000/api/datasets/")
       .then((res) => this.setState({ datasetsList: res.data }))
       .catch((err) => console.log(err));
+
     axios
       .get("http://localhost:8000/api/tools/")
       .then((res) => this.setState({ analysisTools: res.data }))
@@ -137,6 +154,7 @@ class Analyze extends Component {
             </Col>
           </Row>
         </Container>
+        <LoadingIndicator />
       </>
     );
   }

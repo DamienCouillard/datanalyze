@@ -6,6 +6,22 @@ import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from "../components/Modal/Modal";
 import CardCustom from "../components/Card/Card";
+import { usePromiseTracker, trackPromise } from "react-promise-tracker";
+import Loader from "react-loader-spinner";
+
+const LoadingIndicator = (props) => {
+  const { promiseInProgress } = usePromiseTracker();
+  console.log(promiseInProgress);
+  return (
+    promiseInProgress && (
+      <div className="loader-div">
+        <div className="loader">
+          <Loader type="ThreeDots" color="#264653" height="100" width="100" />
+        </div>
+      </div>
+    )
+  );
+};
 class Datasets extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +33,7 @@ class Datasets extends Component {
         created_at: "",
         source: "",
         source_type: "",
+        promiseInProgress: undefined,
       },
       datasetsList: [],
     };
@@ -24,6 +41,7 @@ class Datasets extends Component {
 
   refreshList = () => {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
+
     axios
       .get("http://localhost:8000/api/datasets/")
       .then((res) =>
@@ -59,19 +77,21 @@ class Datasets extends Component {
   handleSubmit = async (item) => {
     this.toggle();
     if (item.index && item.index !== "__dataset_init_index_4111898256585") {
-      await axios
-        .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
-        .then((res) => {
-          this.refreshList();
-        });
+      trackPromise(
+        axios
+          .put(`http://localhost:8000/api/datasets/${item.index}/`, item)
+          .then((res) => {
+            this.refreshList();
+          })
+      );
       // .catch(err => {notify("Update failed")});
       return;
     }
-    await axios
-      .post("http://localhost:8000/api/datasets/", item)
-      .then((res) => {
+    trackPromise(
+      axios.post("http://localhost:8000/api/datasets/", item).then((res) => {
         this.refreshList();
-      });
+      })
+    );
     /* .catch(err => {
         // what now?
         notify("Import failed");
@@ -124,6 +144,7 @@ class Datasets extends Component {
             onSave={this.handleSubmit}
           />
         ) : null}
+        <LoadingIndicator />
       </>
     );
   }

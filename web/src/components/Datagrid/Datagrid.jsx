@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Table, Pagination } from "react-bootstrap";
-
 export default class CustomModal extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +38,7 @@ export default class CustomModal extends Component {
 
   refreshRecords = (from) => {
     // refresh the list of 20 records by calling elasticsearch
+
     axios
       .get(
         `http://localhost:9200/${this.state.activeItem}/_search?size=15&from=${from}`
@@ -52,6 +52,7 @@ export default class CustomModal extends Component {
 
   refreshSize = () => {
     // refresh the list of 20 records by calling elasticsearch
+
     axios
       .get(`http://localhost:9200/${this.state.activeItem}/_stats`)
       .then((res) => {

@@ -13,6 +13,7 @@ import {
   ComposedChart,
 } from "recharts";
 import Select from "react-select";
+import { trackPromise } from "react-promise-tracker";
 
 export default class Line extends Component {
   constructor(props) {
@@ -64,16 +65,18 @@ export default class Line extends Component {
   };
 
   getData = () => {
-    axios
-      .get(
-        `http://localhost:8000/api/analyze/tools?tool=scatter&X=${this.state.X}&Y=${this.state.Y}`
-      )
-      .then((res) => {
-        this.setState({
-          data: res.data["data"],
-        });
-      })
-      .catch((err) => console.log(err));
+    trackPromise(
+      axios
+        .get(
+          `http://localhost:8000/api/analyze/tools?tool=scatter&X=${this.state.X}&Y=${this.state.Y}`
+        )
+        .then((res) => {
+          this.setState({
+            data: res.data["data"],
+          });
+        })
+        .catch((err) => console.log(err))
+    );
   };
 
   multiScatter = () => {

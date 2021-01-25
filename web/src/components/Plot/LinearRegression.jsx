@@ -14,6 +14,7 @@ import {
   Line,
 } from "recharts";
 import Select from "react-select";
+import { trackPromise } from "react-promise-tracker";
 
 export default class LinearReg extends Component {
   constructor(props) {
@@ -58,17 +59,19 @@ export default class LinearReg extends Component {
   };
 
   getData = () => {
-    axios
-      .get(
-        `http://localhost:8000/api/analyze/tools?tool=linearreg&X=${this.state.X}&Y=${this.state.Y}`
-      )
-      .then((res) => {
-        this.setState({
-          data: res.data["data"],
-          res: res.data["res"],
-        });
-      })
-      .catch((err) => console.log(err));
+    trackPromise(
+      axios
+        .get(
+          `http://localhost:8000/api/analyze/tools?tool=linearreg&X=${this.state.X}&Y=${this.state.Y}`
+        )
+        .then((res) => {
+          this.setState({
+            data: res.data["data"],
+            res: res.data["res"],
+          });
+        })
+        .catch((err) => console.log(err))
+    );
   };
 
   plotLine = () => {
