@@ -3,14 +3,18 @@ db.sqlite3
 
 #exclude cache
 /src/config/__pycache__/
+
 /src/apps/dataset/__pycache__/
 /src/apps/dataset/migrations/
+
 /src/apps/processing/__pycache__/
 /src/apps/processing/migrations/
+
+/src/apps/processors/__pycache__/
+
 /src/apps/utils/__pycache__/
 /src/apps/extractors/__pycache__/
 
 #exclude vscode
 .vscode
-
 *.pyc

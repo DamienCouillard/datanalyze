@@ -8,6 +8,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
+from apps.utils.processing import norm_recharts
+
 class NeuralNetworkClassification(object):
 
     def __init__(self, dataset, params):
@@ -51,7 +53,14 @@ class NeuralNetworkClassification(object):
     def save(self):
         self.model.save("./model")
 
+def norm_results(res):
+    norm = {}
+    norm["loss"] = [{"name":i, "train": res["loss"][i], "test":res["val_loss"][i]} for i in range(len(res["loss"]))]
+    norm["acc"] = [{"name":i, "train": res["accuracy"][i], "test":res["val_accuracy"][i]} for i in range(len(res["accuracy"]))]
+    norm["results"] = res["results"]
+    return norm
+
 def exec(dataset, params):
   nn = NeuralNetworkClassification(dataset, params)
   res = nn.train()
-  return res
+  return norm_results(res)

@@ -7,6 +7,21 @@ import Select from "react-select";
 import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Engine from "../components/MLEngine/Engine";
+import { usePromiseTracker } from "react-promise-tracker";
+import Loader from "react-loader-spinner";
+
+const LoadingIndicator = (props) => {
+  const { promiseInProgress } = usePromiseTracker();
+  return (
+    promiseInProgress && (
+      <div className="loader-div">
+        <div className="loader">
+          <Loader type="ThreeDots" color="#264653" height="100" width="100" />
+        </div>
+      </div>
+    )
+  );
+};
 
 const groupedOptions = [
   {
@@ -125,6 +140,7 @@ class MLEngine extends Component {
             </Col>
           </Row>
         </Container>
+        <LoadingIndicator />
       </>
     );
   }
