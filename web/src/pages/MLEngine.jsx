@@ -1,18 +1,29 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup } from "reactstrap";
 import axios from "axios";
 import Sidebar from "../components/Sidebar/Sidebar";
+import Select from "react-select";
 import "../style/css/base.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Engine from "../components/MLEngine/Engine";
+
+const groupedOptions = [
+  {
+    label: "Classification",
+    options: [{ value: "classification_nn", label: "Neural Network" }],
+  },
+];
 
 class MLEngine extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: "",
+      activeItem: undefined,
       datasetsList: [],
       modelsList: [],
+      activeModel: undefined,
+      mapping: [],
     };
   }
 
@@ -28,12 +39,33 @@ class MLEngine extends Component {
     // refresh the list of all existing datasets by calling the GET dataset endpoint (may be redundant)
     axios
       .get("http://localhost:8000/api/datasets/")
-      .then((res) =>
-        this.setState({
-          datasetsList: res.data,
-        })
-      )
+      .then((res) => this.chooseDataset(res))
       .catch((err) => console.log(err));
+  };
+
+  getMapping = () => {
+    axios
+      .get(`http://localhost:8000/api/analyze?index=${this.state.activeItem}`)
+      .then((res) => {
+        this.setState({
+          mapping: res.data["mapping"],
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  setDataset = (e) => {
+    // link the form value to the dataset value to cplot in the datagrid
+    let value = e.value;
+    this.setState({ activeItem: value }, () => {
+      this.getMapping();
+    });
+  };
+
+  setModel = (e) => {
+    // link the form value to the dataset value to cplot in the datagrid
+    let value = e.value;
+    this.setState({ activeModel: value });
   };
 
   componentDidMount() {
@@ -41,12 +73,24 @@ class MLEngine extends Component {
     this.refreshList();
   }
 
-  chooseDataset = () => {
-    // map the list of datasets in the form
-    const newItems = this.state.datasetsList;
-    return newItems.map((item) => {
-      return <option value={item.index}>{item.label}</option>;
-    });
+  callEngine = () => {
+    if (this.state.activeItem && this.state.activeModel) {
+      return (
+        <Engine
+          activeItem={this.state.activeItem}
+          activeModel={this.state.activeModel}
+          mapping={this.state.mapping}
+        />
+      );
+    }
+  };
+
+  chooseDataset = (res) => {
+    var dataList = [];
+    for (const item of res.data) {
+      dataList.push({ value: item.index, label: item.label });
+    }
+    this.setState({ datasetsList: dataList });
   };
 
   setActiveModel = () => {};
@@ -63,22 +107,21 @@ class MLEngine extends Component {
               <h2 className="page-title">Machine Learning Engine</h2>
               <Form>
                 <FormGroup>
-                  <Label for="dataset">Select a dataset</Label>
-                  <Input
-                    type="select"
-                    name="source_type"
-                    value={this.state.activeItem}
-                    onChange={this.handleChange}
-                    placeholder="Enter dataset source type"
-                  >
-                    <option></option>
-                    {this.chooseDataset()}
-                  </Input>
+                  <Select
+                    label="Select a dataset"
+                    options={this.state.datasetsList}
+                    onChange={this.setDataset}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Select
+                    label="Select a model"
+                    options={groupedOptions}
+                    onChange={this.setModel}
+                  />
                 </FormGroup>
               </Form>
-              <Row>
-                <Button className="ml-select">Create a new model</Button>
-              </Row>
+              {this.callEngine()}
             </Col>
           </Row>
         </Container>

@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from apps.dataset.views import DatasetViewset
-from apps.processing.views import initialize_analysis, analysis, toolsList
+from apps.processing.views import initialize_analysis, analysis, toolsList, mlengine, mlList
 
 router = routers.DefaultRouter()
 router.register(r'datasets', DatasetViewset, 'dataset')
@@ -16,5 +16,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/analyze', initialize_analysis),
     path('api/tools/', toolsList),
-    path('api/analyze/tools', analysis)
+    path('api/analyze/tools', analysis),
+    path('api/mlengine', mlList),
+    path('api/mlengine/train', mlengine),
+
 ]
