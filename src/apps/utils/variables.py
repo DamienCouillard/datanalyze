@@ -1,6 +1,7 @@
 from apps.extractors import csv, xlsx
 
 from apps.processors import scatter, linearreg
+from apps.mlengine.classification import neuralnetwork
 
 EXTRACTORS = {
     'CSV': csv.CSVExtractor,
@@ -24,6 +25,28 @@ TOOLS_LIST = [
         "label": 'Linear regression',
         "value": "linearreg"
     },
+
+
+]
+
+MLENGINE_TOOLS = {
+    'classification_nn': neuralnetwork.exec,
+
+}
+
+ENGINE_LIST = [
+
+    {
+        "label" : "Classification",
+        "option" :
+        [
+
+            {
+                "label": 'Neural Network',
+                "value": "classification_nn"
+            },
+        ]
+    }
 
 
 ]

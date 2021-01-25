@@ -6,7 +6,7 @@ from apps import dataset
 
 from apps.dataset.models import Dataset
 from apps.utils.processing import PreProcessedDataset
-from apps.utils.variables import ANALYSIS_TOOLS, TOOLS_LIST
+from apps.utils.variables import ANALYSIS_TOOLS, TOOLS_LIST, MLENGINE_TOOLS, ENGINE_LIST
 
 
 DATASET = None
@@ -42,6 +42,20 @@ def analysis(request):
         return HttpResponseBadRequest("None inndex was given")
     dataset = DATASET.dataframe
     res = tool(dataset, params)
+    return JsonResponse(res)
+
+def mlList(request):
+    return JsonResponse(ENGINE_LIST, safe=False)
+
+def mlengine(request):
+    params = request.GET
+    try:
+        engine_name = params["tool"]
+        engine = MLENGINE_TOOLS[engine_name]
+    except KeyError:
+        return HttpResponseBadRequest("None inndex was given")
+    dataset = DATASET.dataframe
+    res = engine(dataset, params)
     return JsonResponse(res)
     
     

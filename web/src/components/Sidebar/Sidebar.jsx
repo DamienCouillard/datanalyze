@@ -21,6 +21,11 @@ const Side = (props) => {
             Analyze
           </Nav.Link>
         </Nav.Item>
+        <Nav.Item key="mlengine">
+          <Nav.Link className="sidebar-item" href="/mlengine">
+            Machine Learning
+          </Nav.Link>
+        </Nav.Item>
       </Nav>
     </>
   );

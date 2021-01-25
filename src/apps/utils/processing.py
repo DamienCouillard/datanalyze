@@ -41,3 +41,9 @@ class PreProcessedDataset(object):
         unused = ["_index", "_type", "_id", "_score"]
         columns = list(self.dataframe.columns)
         self.mapping = [field for field in columns if not field in unused]
+    
+def norm_recharts(l):
+    res = []
+    for (i, item) in enumerate(l):
+        res.append({"id":i, "val":item})
+    return res
