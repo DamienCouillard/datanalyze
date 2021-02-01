@@ -32,6 +32,7 @@ class NeuralNetworkClassification(object):
         return train_x, test_x, train_y, test_y
 
     def build_model(self):
+        #Define the model
         input_shape = (len(self.features), )
         output_shape = self.dataset[self.labels].nunique()
         model = Sequential()
@@ -42,9 +43,13 @@ class NeuralNetworkClassification(object):
         return model
 
     def train(self, epoch=200, batch_size=5):
+        #compile model
         self.model.compile(self.optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+        #get training and test datasets
         train_x, test_x, train_y, test_y = self.preprocessing()
+        #Train model
         hist = self.model.fit(train_x, train_y, batch_size=batch_size, epochs=epoch, verbose=0, validation_split=0.2)
+        #Evaluate model
         results = self.model.evaluate(test_x, test_y)
         res = hist.history
         res["results"] = results
@@ -54,6 +59,7 @@ class NeuralNetworkClassification(object):
         self.model.save("./model")
 
 def norm_results(res):
+    """normalize the results for recharts"""
     norm = {}
     norm["loss"] = [{"name":i, "train": res["loss"][i], "test":res["val_loss"][i]} for i in range(len(res["loss"]))]
     norm["acc"] = [{"name":i, "train": res["accuracy"][i], "test":res["val_accuracy"][i]} for i in range(len(res["accuracy"]))]

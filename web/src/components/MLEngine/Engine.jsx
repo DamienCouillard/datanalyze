@@ -13,6 +13,7 @@ export default class Engine extends Component {
   }
 
   renderSwitch = () => {
+    //redirect to the correct component
     switch (this.state.activeModel) {
       case "classification_nn":
         return (

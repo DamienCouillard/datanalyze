@@ -18,7 +18,8 @@ export default class CustomModal extends Component {
     this.pageLast = this.pageLast.bind(this);
   }
 
-  getMapping = (data) => {
+  getMapping = () => {
+    //set the mapping from the records
     var res = [];
     var record = this.state.records[1];
     for (var key in record) {
@@ -28,6 +29,7 @@ export default class CustomModal extends Component {
   };
 
   getRecords = (data) => {
+    // extract the records from elasticsearch
     var res = [];
     var list = data["hits"]["hits"];
     for (var i in list) {
@@ -68,12 +70,14 @@ export default class CustomModal extends Component {
   }
 
   mapHeader = () => {
+    //display the table header
     return this.state.mapping.map((item) => {
       return <th>{item}</th>;
     });
   };
 
   mapRecord = () => {
+    //display the records in a table
     var records = this.state.records;
     var toMap = [];
     for (var i in records) {
@@ -94,6 +98,7 @@ export default class CustomModal extends Component {
   };
 
   mapDatagrid = () => {
+    //display the whole table
     return (
       <Table striped bordered hover>
         <thead>
@@ -105,6 +110,7 @@ export default class CustomModal extends Component {
   };
 
   pageChanged(e) {
+    //change page in pagination
     var newPage = parseInt(e.target.text);
     if (newPage) {
       this.setState({ active: newPage });
@@ -113,6 +119,7 @@ export default class CustomModal extends Component {
   }
 
   pageNext(e) {
+    //go to next page in pagination
     var maxPage = Math.ceil(this.state.size / 15);
     var newPage = this.state.active + 1;
     if (newPage < maxPage + 1) {
@@ -122,6 +129,7 @@ export default class CustomModal extends Component {
   }
 
   pagePrev(e) {
+    //go to previous page in pagination
     var newPage = this.state.active;
     if (newPage > 1) {
       this.setState({ active: newPage - 1 });
@@ -130,11 +138,13 @@ export default class CustomModal extends Component {
   }
 
   pageFirst(e) {
+    //go to first page
     this.setState({ active: 1 });
     this.refreshRecords(0);
   }
 
   pageLast(e) {
+    //go to last page
     var maxPage = Math.ceil(this.state.size / 15);
     console.log(maxPage);
     this.setState({ active: maxPage });

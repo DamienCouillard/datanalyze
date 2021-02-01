@@ -6,6 +6,7 @@ def scatter(dataset, params):
     X = params["X"]
     Y = params["Y"]
     Y = Y.split(',')
+    #Get the Xs and Y from the dataset
     if not X in Y:
         df = dataset[[X] + Y]
     else:

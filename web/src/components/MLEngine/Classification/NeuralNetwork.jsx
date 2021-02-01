@@ -29,7 +29,7 @@ export default class ClassificationNeuralNetwork extends Component {
   }
 
   setOutputChange = (e) => {
-    // link the form value to the dataset value to cplot in the datagrid
+    // link the form value to the dataset value to plot
     let value = e.value;
     this.setState({ classes: value }, () => {
       if (this.state.inputs !== undefined) {
@@ -39,7 +39,7 @@ export default class ClassificationNeuralNetwork extends Component {
   };
 
   setInputChange = (e) => {
-    // link the form value to the dataset value to cplot in the datagrid
+    // link the form value to the dataset value to plot
     if (e == null) {
       this.setState({ Y: undefined });
     } else {

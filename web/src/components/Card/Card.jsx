@@ -68,6 +68,7 @@ class DatasetCard extends React.Component {
   };
 
   renderDescription = (desc) => {
+    // display the description
     if (desc.length > 256) {
       return desc.substring(0, 253).concat("...");
     } else {
