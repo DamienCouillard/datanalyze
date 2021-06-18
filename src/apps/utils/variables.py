@@ -1,6 +1,6 @@
 from apps.extractors import csv, xlsx
 
-from apps.processors import scatter, linearreg
+from apps.processors import scatter, linearreg, kmeans, SVMachine
 from apps.mlengine.classification import neuralnetwork
 
 EXTRACTORS = {
@@ -14,7 +14,8 @@ EXTRACTORS_LIST = [('CSV', 'CSV'), ('Excel', 'Excel')]
 ANALYSIS_TOOLS = {
     'scatter': scatter.scatter,
     'linearreg': linearreg.linearreg,
-
+    'kmeans': kmeans.kmeans,
+    'SVM' : SVMachine.Svm
 }
 TOOLS_LIST = [
     {
@@ -24,6 +25,14 @@ TOOLS_LIST = [
     {
         "label": 'Linear regression',
         "value": "linearreg"
+    },
+    {
+        "label": 'K-means',
+        "value": "kmeans"
+    },
+{
+        "label": 'SVM',
+        "value": "SVM"
     },
 
 

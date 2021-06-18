@@ -92,9 +92,12 @@ export default class Line extends Component {
     let count = 0,
       data;
     data = this.state.Y;
+    console.log(data);
+    console.log("this state data", this.state.data);
     count = data.length;
     return data.map((item) => {
       count = count + 1;
+      console.log("item", item);
       return (
         <Scatter
           type="number"
@@ -107,7 +110,6 @@ export default class Line extends Component {
 
   plotLine = () => {
     if (this.state.X !== undefined && this.state.Y !== undefined) {
-      console.log(this.state.data);
       return (
         <ResponsiveContainer width="75%" aspect={2} className="chart">
           <ComposedChart

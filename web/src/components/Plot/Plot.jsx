@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Line from "./ScatterChart";
 import LinearReg from "./LinearRegression";
+import Kmeans from "./kmeans";
+import SVM from "./SVM";
 
 export default class Plot extends Component {
   constructor(props) {
@@ -25,6 +27,20 @@ export default class Plot extends Component {
       case "linearreg":
         return (
           <LinearReg
+            activeItem={this.state.activeItem}
+            mapping={this.state.mapping}
+          />
+        );
+      case "kmeans":
+        return (
+          <Kmeans
+            activeItem={this.state.activeItem}
+            mapping={this.state.mapping}
+          />
+        );
+      case "SVM":
+        return (
+          <SVM
             activeItem={this.state.activeItem}
             mapping={this.state.mapping}
           />

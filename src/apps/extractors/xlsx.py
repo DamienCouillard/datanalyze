@@ -6,14 +6,16 @@ import pandas as pd
 
 class XLSXExtractor(Extractor):
 
-    """ Define an CSV API extractor, does not work with CSV file yet """
     
     def __init__(self, *args, **kwarg):
+        print(kwarg)
         self.index = kwarg["index"]
         self.source_path = kwarg["path"]
+        self.sheet = kwarg["xlsx_sheet"]
         self.mapping = []
-        data = pd.read_excel(self.source_path, engine = "openpyxl")
+        data = pd.read_excel(self.source_path, sheet_name = 0, engine = "openpyxl")
         self.data = pd.DataFrame(data)
+
 
     def extract_mapping(self) -> DatasetMapping:
         """ Extract mapping from the source using pandas"""
@@ -30,7 +32,7 @@ class XLSXExtractor(Extractor):
             fields.append(field)
             self.mapping.append(label)
         return DatasetMapping(fields=fields)
-            
+
 
     
     def extract(self) -> DatasetRecords:

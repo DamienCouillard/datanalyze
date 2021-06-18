@@ -33,6 +33,7 @@ class Datasets extends Component {
         created_at: "",
         source: "",
         source_type: "",
+        xlsx_sheet: "",
         promiseInProgress: undefined,
       },
       datasetsList: [],
@@ -106,6 +107,7 @@ class Datasets extends Component {
       index: "__dataset_init_index_4111898256585",
       source: "",
       source_type: "",
+      xlsx_sheet: "",
     };
     this.setState({ activeItem: item, modal: !this.state.modal });
   };

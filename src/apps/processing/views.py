@@ -43,7 +43,7 @@ def analysis(request):
         tool_name = params["tool"]
         tool = ANALYSIS_TOOLS[tool_name]
     except KeyError:
-        return HttpResponseBadRequest("None inndex was given")
+        return HttpResponseBadRequest("None index was given")
      #Trigger a given algorithm on the saved dataset in DATASET
     dataset = DATASET.dataframe
     res = tool(dataset, params)

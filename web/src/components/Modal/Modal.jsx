@@ -21,7 +21,9 @@ export default class CustomModal extends Component {
   handleChange = (e) => {
     // link the form value to the dataset value to create or update
     let { name, value } = e.target;
+    console.log(e.target);
     const activeItem = { ...this.state.activeItem, [name]: value };
+    console.log(activeItem);
     this.setState({ activeItem });
   };
 
@@ -76,6 +78,18 @@ export default class CustomModal extends Component {
                 <option>CSV</option>
                 <option>Excel</option>
               </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="xlsx_sheet">Excel Source Sheet</Label>
+              <input
+                type="number"
+                name="xlsx_sheet"
+                min="0"
+                setp="1"
+                value={this.state.activeItem.xlsx_sheet}
+                onChange={this.handleChange}
+                defaultValue="0"
+              />
             </FormGroup>
           </Form>
         </ModalBody>
